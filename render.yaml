@@ -1,0 +1,22 @@
+databases:
+  - name: wow-detailing-db
+    databaseName: wow_detailing
+    user: wow_detailing_user
+
+services:
+  - type: web
+    name: wow-detailing-api
+    runtime: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: wow-detailing-db
+          property: connectionString
+      - key: CLIENT_URL
+        sync: false
