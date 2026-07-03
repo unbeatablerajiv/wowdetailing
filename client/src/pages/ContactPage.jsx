@@ -1,12 +1,18 @@
 import { useState } from 'react'
-import axios from 'axios'
 import toast from 'react-hot-toast'
 import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react'
-import { apiPath } from '../utils/api'
+import {
+  BUSINESS_EMAIL,
+  BUSINESS_EMAIL_LINK,
+  BUSINESS_PHONE,
+  BUSINESS_PHONE_LINK,
+  BUSINESS_WHATSAPP_LINK,
+  buildMailtoLink,
+} from '../utils/contact'
 
 const contactInfo = [
-  { icon: Phone, label: 'Phone', value: '+91 98765 43210', href: 'tel:+919876543210' },
-  { icon: Mail, label: 'Email', value: 'hello@wowdetailing.com', href: 'mailto:hello@wowdetailing.com' },
+  { icon: Phone, label: 'Phone', value: BUSINESS_PHONE, href: BUSINESS_PHONE_LINK },
+  { icon: Mail, label: 'Email', value: BUSINESS_EMAIL, href: BUSINESS_EMAIL_LINK },
   { icon: MapPin, label: 'Location', value: '42 MG Road, Bengaluru, Karnataka 560001', href: '#' },
   { icon: Clock, label: 'Hours', value: 'Mon–Fri 8am–6pm, Sat 9am–4pm', href: null },
 ]
@@ -17,18 +23,23 @@ export default function ContactPage() {
 
   const update = (field, value) => setForm(prev => ({ ...prev, [field]: value }))
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
+    const mailtoLink = buildMailtoLink({
+      subject: `Website enquiry: ${form.subject}`,
+      body: [
+        `Name: ${form.name}`,
+        `Email: ${form.email}`,
+        '',
+        form.message,
+      ].join('\n'),
+    })
+
     setLoading(true)
-    try {
-      await axios.post(apiPath('/api/contact'), form)
-      toast.success("Message sent! We'll be in touch soon.")
-      setForm({ name: '', email: '', subject: '', message: '' })
-    } catch {
-      toast.error('Failed to send message. Please try again.')
-    } finally {
-      setLoading(false)
-    }
+    window.location.href = mailtoLink
+    toast.success('Your email app is opening now.')
+    setForm({ name: '', email: '', subject: '', message: '' })
+    setLoading(false)
   }
 
   return (
@@ -40,6 +51,9 @@ export default function ContactPage() {
           <h1 className="section-heading mt-2">Get in Touch</h1>
           <p className="section-subheading mx-auto mt-4">
             Questions about a service, a custom quote, or just want to say hi? We'd love to hear from you.
+          </p>
+          <p className="text-sm text-gray-500 mt-4">
+            The site is currently taking enquiries by email, phone, and WhatsApp.
           </p>
         </div>
 
@@ -78,6 +92,11 @@ export default function ContactPage() {
           {/* Form */}
           <div>
             <h2 className="text-navy-800 font-bold text-xl mb-6">Send a Message</h2>
+            <div className="mb-5 rounded-xl border border-brand-500/20 bg-brand-500/5 p-4 text-sm text-gray-600">
+              Submitting this form opens your email app with your message pre-filled.
+              If you prefer, you can also call <a href={BUSINESS_PHONE_LINK} className="text-brand-500 hover:underline">{BUSINESS_PHONE}</a> or
+              {' '}<a href={BUSINESS_WHATSAPP_LINK} target="_blank" rel="noreferrer" className="text-brand-500 hover:underline">message us on WhatsApp</a>.
+            </div>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
@@ -105,7 +124,7 @@ export default function ContactPage() {
                 />
               </div>
               <button type="submit" disabled={loading} className="btn-primary w-full justify-center disabled:opacity-40">
-                {loading ? 'Sending...' : <><Send size={16} /> Send Message</>}
+                {loading ? 'Opening email...' : <><Send size={16} /> Compose Email</>}
               </button>
             </form>
           </div>

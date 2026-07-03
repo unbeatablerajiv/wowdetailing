@@ -1,12 +1,19 @@
 import { useState, useEffect, useRef } from 'react'
-import axios from 'axios'
 import toast from 'react-hot-toast'
 import {
   CheckCircle, ChevronRight, ChevronLeft, Car, User,
   Calendar, ClipboardList, Zap, ChevronDown,
 } from 'lucide-react'
 import indianCars from '../data/indianCars'
-import { apiPath } from '../utils/api'
+import {
+  BUSINESS_EMAIL,
+  BUSINESS_EMAIL_LINK,
+  BUSINESS_PHONE,
+  BUSINESS_PHONE_LINK,
+  BUSINESS_WHATSAPP_LINK,
+  buildMailtoLink,
+  buildWhatsAppLink,
+} from '../utils/contact'
 
 // ─── Static Data ──────────────────────────────────────────────────────────────
 
@@ -54,6 +61,21 @@ const initialForm = {
   date: '', timeSlot: '',
   firstName: '', lastName: '', email: '', phone: '', notes: '',
 }
+
+const formatBookingMessage = (form, selectedService) => [
+  'Hello Wow Detailing, I would like to request a booking.',
+  '',
+  `Name: ${form.firstName} ${form.lastName}`.trim(),
+  `Phone: ${form.phone}`,
+  `Email: ${form.email}`,
+  `Vehicle: ${form.vehicleYear} ${form.vehicleMake} ${form.vehicleModel}`,
+  `Vehicle type: ${form.vehicleCategory} / ${form.vehicleSize}`,
+  `Color: ${form.vehicleColor || 'Not specified'}`,
+  `Service: ${selectedService?.label || form.serviceType}`,
+  `Preferred date: ${form.date}`,
+  `Preferred time: ${form.timeSlot}`,
+  `Notes: ${form.notes || 'None'}`,
+].join('\n')
 
 // ─── SearchableSelect ─────────────────────────────────────────────────────────
 
@@ -186,20 +208,24 @@ export default function BookingForm() {
   }
 
   const handleSubmit = async () => {
+    const selectedService = SERVICES.find(s => s.id === form.serviceType)
+    const bookingMessage = formatBookingMessage(form, selectedService)
+    const requestRef = `WOW-${Date.now().toString().slice(-6)}`
+
     setLoading(true)
-    try {
-      const res = await axios.post(apiPath('/api/bookings'), form)
-      setBookingRef(res.data.data.id)
-      setSubmitted(true)
-      toast.success('Booking confirmed!')
-    } catch {
-      toast.error('Something went wrong. Please try again.')
-    } finally {
-      setLoading(false)
-    }
+    window.open(buildWhatsAppLink(bookingMessage), '_blank', 'noopener,noreferrer')
+    setBookingRef(requestRef)
+    setSubmitted(true)
+    toast.success('Your booking request is ready to send on WhatsApp.')
+    setLoading(false)
   }
 
   const selectedService = SERVICES.find(s => s.id === form.serviceType)
+  const bookingMessage = formatBookingMessage(form, selectedService)
+  const bookingEmailLink = buildMailtoLink({
+    subject: `Booking request for ${selectedService?.label || 'Wow Detailing service'}`,
+    body: bookingMessage,
+  })
 
   // ── Confirmed screen ──────────────────────────────────────────────────────
 
@@ -209,22 +235,38 @@ export default function BookingForm() {
         <div className="w-20 h-20 bg-brand-500/10 border border-brand-500/30 rounded-full flex items-center justify-center mb-6 animate-float">
           <CheckCircle size={36} className="text-brand-500" />
         </div>
-        <h3 className="text-navy-800 text-2xl font-bold mb-2">Booking Confirmed!</h3>
+        <h3 className="text-navy-800 text-2xl font-bold mb-2">Booking Request Ready</h3>
         <p className="text-gray-600 mb-2">
           Thank you, <span className="text-navy-800 font-medium">{form.firstName}</span>.
         </p>
         <p className="text-gray-500 text-sm mb-6">
-          We've received your booking for a{' '}
+          We prepared your request for a{' '}
           <span className="text-brand-500">{selectedService?.label}</span> on{' '}
           <span className="text-brand-500">{form.date}</span> at{' '}
-          <span className="text-brand-500">{form.timeSlot}</span>.
+          <span className="text-brand-500">{form.timeSlot}</span>. Use WhatsApp, email, or call us to confirm it.
         </p>
         <div className="bg-dark-700 border border-dark-500 rounded-xl px-8 py-4 mb-8">
-          <p className="text-gray-500 text-xs uppercase tracking-wider mb-1">Booking Reference</p>
-          <p className="text-brand-500 font-mono font-bold text-lg">WOW-{String(bookingRef).padStart(4, '0')}</p>
+          <p className="text-gray-500 text-xs uppercase tracking-wider mb-1">Request Reference</p>
+          <p className="text-brand-500 font-mono font-bold text-lg">{bookingRef}</p>
         </div>
-        <p className="text-gray-500 text-sm">
-          A confirmation will be sent to <span className="text-navy-800">{form.email}</span>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <a
+            href={buildWhatsAppLink(bookingMessage)}
+            target="_blank"
+            rel="noreferrer"
+            className="btn-primary text-sm"
+          >
+            Send on WhatsApp
+          </a>
+          <a href={bookingEmailLink} className="btn-outline text-sm">
+            Send by Email
+          </a>
+          <a href={BUSINESS_PHONE_LINK} className="btn-outline text-sm">
+            Call {BUSINESS_PHONE}
+          </a>
+        </div>
+        <p className="text-gray-500 text-sm mt-5">
+          We’ll confirm manually once you contact us through WhatsApp, email, or phone.
         </p>
         <button
           onClick={() => { setForm(initialForm); setStep(1); setSubmitted(false) }}
@@ -240,6 +282,11 @@ export default function BookingForm() {
 
   return (
     <div>
+      <div className="mb-6 rounded-xl border border-brand-500/20 bg-brand-500/5 p-4 text-sm text-gray-600">
+        This static version prepares your booking details and opens WhatsApp on the last step so you can send the request instantly.
+        You can also reach us at <a href={BUSINESS_EMAIL_LINK} className="text-brand-500 hover:underline">{BUSINESS_EMAIL}</a>.
+      </div>
+
       {/* Step indicator */}
       <div className="flex items-center justify-between mb-10">
         {STEPS.map((s, idx) => {
