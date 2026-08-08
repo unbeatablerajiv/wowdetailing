@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Phone, Mail, MapPin, Instagram, Facebook, Twitter } from 'lucide-react'
+import { Phone, Mail, MapPin, Instagram, Facebook, Youtube } from 'lucide-react'
 
 const links = {
   Pages: [
@@ -16,6 +16,12 @@ const links = {
   ],
 }
 
+const socialLinks = [
+  { label: 'YouTube', href: 'https://www.youtube.com/@wowdetailingstudio', icon: Youtube },
+  { label: 'Instagram', href: 'https://www.instagram.com/wowdetailingofficial/', icon: Instagram },
+  { label: 'Facebook', href: 'https://www.facebook.com/share/1Dx1pS35P4/', icon: Facebook },
+]
+
 export default function Footer() {
   return (
     <footer className="bg-navy-900 border-t border-navy-800">
@@ -31,13 +37,18 @@ export default function Footer() {
             </p>
             {/* Social */}
             <div className="flex gap-3">
-              {[Instagram, Facebook, Twitter].map((Icon, i) => (
-                <button
-                  key={i}
+              {socialLinks.map(({ label, href, icon: Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`Visit Wow Detailing on ${label}`}
+                  title={label}
                   className="w-9 h-9 bg-navy-800 border border-navy-700 rounded-lg flex items-center justify-center text-gray-400 hover:text-brand-400 hover:border-brand-500 transition-colors"
                 >
                   <Icon size={15} />
-                </button>
+                </a>
               ))}
             </div>
           </div>

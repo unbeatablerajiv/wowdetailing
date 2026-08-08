@@ -5,12 +5,12 @@ import {
   Calendar, ClipboardList, Zap, ChevronDown,
 } from 'lucide-react'
 import indianCars from '../data/indianCars'
+import vehicleTypes from '../data/vehicleTypes.json'
 import {
   BUSINESS_EMAIL,
   BUSINESS_EMAIL_LINK,
   BUSINESS_PHONE,
   BUSINESS_PHONE_LINK,
-  BUSINESS_WHATSAPP_LINK,
   buildMailtoLink,
   buildWhatsAppLink,
 } from '../utils/contact'
@@ -21,11 +21,20 @@ const CURRENT_YEAR = new Date().getFullYear()
 const YEARS  = Array.from({ length: CURRENT_YEAR - 1989 }, (_, i) => String(CURRENT_YEAR - i))
 const MAKES  = Object.keys(indianCars).sort()
 
-const VEHICLE_CATEGORIES = [
-  { key: 'hatchback', label: 'Hatchback', example: 'e.g. Wagon R, Swift, Polo'     },
-  { key: 'sedan',     label: 'Sedan',     example: 'e.g. City, Verna, Ciaz'        },
-  { key: 'suv',       label: 'SUV',       example: 'e.g. Creta, Brezza, Fortuner'  },
-]
+const VEHICLE_TYPE_OPTIONS = [...new Set(vehicleTypes.map(vehicle => vehicle.type))].sort()
+
+const normalizeVehicleName = (value) => value.toLowerCase().replace(/[^a-z0-9]/g, '')
+
+const findVehicleType = (make, model) => {
+  if (!make || !model) return ''
+
+  const normalizedMake = normalizeVehicleName(make)
+  const normalizedModel = normalizeVehicleName(model)
+  return vehicleTypes.find(vehicle => (
+    normalizeVehicleName(vehicle.make) === normalizedMake
+    && normalizeVehicleName(vehicle.model) === normalizedModel
+  ))?.type || ''
+}
 
 const VEHICLE_SIZES = [
   { key: 'S',  label: 'S',  example: 'Small'       },
@@ -191,13 +200,19 @@ export default function BookingForm() {
 
   const update = (field, value) => setForm(prev => ({ ...prev, [field]: value }))
 
-  // Cascade: year change clears model only
+  // Cascade: changes to year or make clear dependent vehicle details.
   const handleYearChange = (year) =>
-    setForm(prev => ({ ...prev, vehicleYear: year, vehicleModel: '' }))
+    setForm(prev => ({ ...prev, vehicleYear: year, vehicleModel: '', vehicleCategory: '' }))
 
-  // Cascade: make change clears model
   const handleMakeChange = (make) =>
-    setForm(prev => ({ ...prev, vehicleMake: make, vehicleModel: '' }))
+    setForm(prev => ({ ...prev, vehicleMake: make, vehicleModel: '', vehicleCategory: '' }))
+
+  const handleModelChange = (model) =>
+    setForm(prev => ({
+      ...prev,
+      vehicleModel: model,
+      vehicleCategory: findVehicleType(prev.vehicleMake, model),
+    }))
 
   const canProceed = () => {
     if (step === 1) return form.vehicleYear && form.vehicleMake && form.vehicleModel && form.vehicleCategory && form.vehicleSize
@@ -221,10 +236,9 @@ export default function BookingForm() {
   }
 
   const selectedService = SERVICES.find(s => s.id === form.serviceType)
-  const bookingMessage = formatBookingMessage(form, selectedService)
-  const bookingEmailLink = buildMailtoLink({
-    subject: `Booking request for ${selectedService?.label || 'Wow Detailing service'}`,
-    body: bookingMessage,
+  const quotationEmailLink = buildMailtoLink({
+    subject: `Quotation request for ${selectedService?.label || 'Wow Detailing service'}`,
+    body: formatBookingMessage(form, selectedService),
   })
 
   // ── Confirmed screen ──────────────────────────────────────────────────────
@@ -250,16 +264,8 @@ export default function BookingForm() {
           <p className="text-brand-500 font-mono font-bold text-lg">{bookingRef}</p>
         </div>
         <div className="flex flex-col sm:flex-row gap-3">
-          <a
-            href={buildWhatsAppLink(bookingMessage)}
-            target="_blank"
-            rel="noreferrer"
-            className="btn-primary text-sm"
-          >
-            Send on WhatsApp
-          </a>
-          <a href={bookingEmailLink} className="btn-outline text-sm">
-            Send by Email
+          <a href={quotationEmailLink} className="btn-primary text-sm">
+            Request for Quotation
           </a>
           <a href={BUSINESS_PHONE_LINK} className="btn-outline text-sm">
             Call {BUSINESS_PHONE}
@@ -327,7 +333,7 @@ export default function BookingForm() {
 
             {/* Year */}
             <div>
-              <label className="label">Year *</label>
+              <label className="label">Year <span className="text-red-600" aria-hidden="true">*</span></label>
               <SearchableSelect
                 options={YEARS}
                 value={form.vehicleYear}
@@ -338,7 +344,7 @@ export default function BookingForm() {
 
             {/* Make */}
             <div>
-              <label className="label">Make *</label>
+              <label className="label">Make <span className="text-red-600" aria-hidden="true">*</span></label>
               <SearchableSelect
                 options={MAKES}
                 value={form.vehicleMake}
@@ -350,12 +356,12 @@ export default function BookingForm() {
 
             {/* Model */}
             <div>
-              <label className="label">Model *</label>
+              <label className="label">Model <span className="text-red-600" aria-hidden="true">*</span></label>
               {models.length > 0 ? (
                 <SearchableSelect
                   options={models}
                   value={form.vehicleModel}
-                  onChange={val => update('vehicleModel', val)}
+                  onChange={handleModelChange}
                   placeholder="Select model"
                   disabled={!form.vehicleMake}
                 />
@@ -365,7 +371,7 @@ export default function BookingForm() {
                     className={`input-field ${!form.vehicleMake ? 'opacity-50 cursor-not-allowed' : ''}`}
                     placeholder={form.vehicleMake ? 'Type your model' : 'Select make first'}
                     value={form.vehicleModel}
-                    onChange={e => update('vehicleModel', e.target.value)}
+                    onChange={e => handleModelChange(e.target.value)}
                     disabled={!form.vehicleMake}
                   />
                   {form.vehicleMake && (
@@ -391,29 +397,33 @@ export default function BookingForm() {
 
           {/* Vehicle Type */}
           <div className="mb-5">
-            <label className="label mb-2">Vehicle Type *</label>
-            <div className="grid grid-cols-3 gap-3">
-              {VEHICLE_CATEGORIES.map(({ key, label, example }) => (
-                <button
-                  key={key}
-                  type="button"
-                  onClick={() => update('vehicleCategory', key)}
-                  className={`p-3 rounded-xl border-2 text-left transition-all ${
-                    form.vehicleCategory === key
-                      ? 'border-brand-500 bg-brand-500/5'
-                      : 'border-dark-500 bg-white hover:border-brand-500/40'
-                  }`}
-                >
-                  <div className="text-navy-800 font-semibold text-sm">{label}</div>
-                  <div className="text-gray-400 text-xs mt-0.5">{example}</div>
-                </button>
-              ))}
-            </div>
+            <label className="label mb-2">Vehicle Type <span className="text-red-600" aria-hidden="true">*</span></label>
+            {findVehicleType(form.vehicleMake, form.vehicleModel) ? (
+              <div className="input-field flex items-center justify-between bg-gray-50">
+                <span>{form.vehicleCategory}</span>
+                <span className="flex items-center gap-1.5 text-xs font-medium text-brand-500">
+                  <CheckCircle size={14} /> Auto-filled
+                </span>
+              </div>
+            ) : (
+              <SearchableSelect
+                options={VEHICLE_TYPE_OPTIONS}
+                value={form.vehicleCategory}
+                onChange={value => update('vehicleCategory', value)}
+                placeholder={form.vehicleModel ? 'Select vehicle type' : 'Select model first'}
+                disabled={!form.vehicleModel}
+              />
+            )}
+            {form.vehicleModel && !findVehicleType(form.vehicleMake, form.vehicleModel) && (
+              <p className="text-xs text-gray-400 mt-1.5">
+                This model is not in the vehicle type database. Please select its type manually.
+              </p>
+            )}
           </div>
 
           {/* Vehicle Size */}
           <div>
-            <label className="label mb-2">Vehicle Size *</label>
+            <label className="label mb-2">Vehicle Size <span className="text-red-600" aria-hidden="true">*</span></label>
             <div className="grid grid-cols-4 gap-3">
               {VEHICLE_SIZES.map(({ key, label, example }) => (
                 <button
@@ -441,7 +451,9 @@ export default function BookingForm() {
       {/* ── Step 2: Service ── */}
       {step === 2 && (
         <div>
-          <h3 className="text-navy-800 font-bold text-xl mb-6">Choose your service</h3>
+          <h3 className="text-navy-800 font-bold text-xl mb-6">
+            Choose your service <span className="text-red-600" aria-hidden="true">*</span>
+          </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {SERVICES.map((s) => (
               <button
@@ -488,7 +500,7 @@ export default function BookingForm() {
           <h3 className="text-navy-800 font-bold text-xl mb-6">Pick a date & time</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <label className="label">Preferred Date *</label>
+              <label className="label">Preferred Date <span className="text-red-600" aria-hidden="true">*</span></label>
               <input
                 className="input-field"
                 type="date"
@@ -498,7 +510,7 @@ export default function BookingForm() {
               />
             </div>
             <div>
-              <label className="label">Preferred Time *</label>
+              <label className="label">Preferred Time <span className="text-red-600" aria-hidden="true">*</span></label>
               <div className="grid grid-cols-3 gap-2">
                 {TIME_SLOTS.map((slot) => (
                   <button
@@ -526,19 +538,19 @@ export default function BookingForm() {
           <h3 className="text-navy-800 font-bold text-xl mb-6">Your contact details</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="label">First Name *</label>
+              <label className="label">First Name <span className="text-red-600" aria-hidden="true">*</span></label>
               <input className="input-field" placeholder="Rahul" value={form.firstName} onChange={e => update('firstName', e.target.value)} />
             </div>
             <div>
-              <label className="label">Last Name *</label>
+              <label className="label">Last Name <span className="text-red-600" aria-hidden="true">*</span></label>
               <input className="input-field" placeholder="Sharma" value={form.lastName} onChange={e => update('lastName', e.target.value)} />
             </div>
             <div>
-              <label className="label">Email *</label>
+              <label className="label">Email <span className="text-red-600" aria-hidden="true">*</span></label>
               <input className="input-field" type="email" placeholder="rahul@example.com" value={form.email} onChange={e => update('email', e.target.value)} />
             </div>
             <div>
-              <label className="label">Phone *</label>
+              <label className="label">Phone <span className="text-red-600" aria-hidden="true">*</span></label>
               <input className="input-field" type="tel" placeholder="+91 XXXXX XXXXX" value={form.phone} onChange={e => update('phone', e.target.value)} />
             </div>
             <div className="sm:col-span-2">
@@ -567,8 +579,6 @@ export default function BookingForm() {
               <span className="text-navy-800">{form.date}</span>
               <span className="text-gray-500">Time:</span>
               <span className="text-navy-800">{form.timeSlot}</span>
-              <span className="text-gray-500">Est. Price:</span>
-              <span className="text-brand-500 font-bold">{selectedService?.price}</span>
             </div>
           </div>
         </div>

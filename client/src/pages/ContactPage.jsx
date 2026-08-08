@@ -100,20 +100,20 @@ export default function ContactPage() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="label">Your Name</label>
+                  <label className="label">Your Name <span className="text-red-600" aria-hidden="true">*</span></label>
                   <input className="input-field" placeholder="Rahul Sharma" value={form.name} onChange={e => update('name', e.target.value)} required />
                 </div>
                 <div>
-                  <label className="label">Email Address</label>
+                  <label className="label">Email Address <span className="text-red-600" aria-hidden="true">*</span></label>
                   <input className="input-field" type="email" placeholder="rahul@example.com" value={form.email} onChange={e => update('email', e.target.value)} required />
                 </div>
               </div>
               <div>
-                <label className="label">Subject</label>
+                <label className="label">Subject <span className="text-red-600" aria-hidden="true">*</span></label>
                 <input className="input-field" placeholder="Question about Full Detail service..." value={form.subject} onChange={e => update('subject', e.target.value)} required />
               </div>
               <div>
-                <label className="label">Message</label>
+                <label className="label">Message <span className="text-red-600" aria-hidden="true">*</span></label>
                 <textarea
                   className="input-field resize-none"
                   rows={6}

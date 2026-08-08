@@ -38,9 +38,9 @@ export default function Hero() {
 
           {/* Headline */}
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight mb-6">
-            <span className="text-white">Your Vehicle Deserves</span>
+            <span className="text-white">Your vehicle deserves</span>
             <br />
-            <span className="text-gradient">The Best Care</span>
+            <span className="text-gradient">The Wow Care</span>
           </h1>
 
           <p className="text-gray-300 text-lg md:text-xl leading-relaxed mb-10 max-w-xl">
