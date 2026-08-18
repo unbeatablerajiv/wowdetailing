@@ -19,7 +19,7 @@ export default function BookingPage() {
         </div>
 
         <p className="text-center text-gray-500 text-xs mt-6">
-          Prefer to call? <a href="tel:+919876543210" className="text-brand-500 hover:underline">+91 98765 43210</a> — Mon–Sat 8am–5pm
+          Prefer to call? <a href="tel:+916207804906" className="text-brand-500 hover:underline">+91 6207804906</a> — Mon–Sat 8am–5pm
         </p>
       </div>
     </div>
