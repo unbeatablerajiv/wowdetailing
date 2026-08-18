@@ -1,7 +1,6 @@
 import Hero from '../components/Hero'
 import Services from '../components/Services'
 import WhyUs from '../components/WhyUs'
-import Gallery from '../components/Gallery'
 import Testimonials from '../components/Testimonials'
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
@@ -12,7 +11,6 @@ export default function Home() {
       <Hero />
       <Services />
       <WhyUs />
-      <Gallery />
       <Testimonials />
 
       {/* CTA Banner */}
