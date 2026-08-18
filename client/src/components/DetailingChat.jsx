@@ -1,10 +1,12 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import { CalendarPlus, ImagePlus, LoaderCircle, MessageCircle, Send, Sparkles, X } from 'lucide-react'
 
 const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '')
 const WHATSAPP_URL = 'https://wa.me/916207804906'
+const CHAT_COOLDOWN_MS = 15_000
+const CHAT_COOLDOWN_KEY = 'wow-ai-chat-cooldown-until'
 const welcome = {
   role: 'assistant',
   text: 'Welcome to WOW! I’m your personal car-care expert. Tell me your car, its condition, or the finish you’re after—and I’ll help you find the perfect detail, protection, and shine.'
@@ -16,18 +18,31 @@ export default function DetailingChat() {
   const [messages, setMessages] = useState([welcome])
   const [text, setText] = useState('')
   const [busy, setBusy] = useState(false)
+  const [cooldownUntil, setCooldownUntil] = useState(() => Number(localStorage.getItem(CHAT_COOLDOWN_KEY)) || 0)
+  const [now, setNow] = useState(Date.now())
   const fileRef = useRef(null)
-  const canSend = useMemo(() => text.trim() && !busy, [text, busy])
+  const cooldownSeconds = Math.max(0, Math.ceil((cooldownUntil - now) / 1000))
+  const canSend = useMemo(() => text.trim() && !busy && cooldownSeconds === 0, [text, busy, cooldownSeconds])
+
+  useEffect(() => {
+    if (cooldownSeconds === 0) return undefined
+    const timer = window.setInterval(() => setNow(Date.now()), 500)
+    return () => window.clearInterval(timer)
+  }, [cooldownSeconds])
 
   async function sendMessage(rawText, image = null) {
     const message = rawText.trim()
-    if ((!message && !image) || busy) return
+    if ((!message && !image) || busy || cooldownSeconds > 0) return
 
     const userMessage = message || 'Please analyse this car photo and recommend suitable detailing work.'
     const nextMessages = [...messages, { role: 'user', text: userMessage }]
     setMessages(nextMessages)
     setText('')
     setBusy(true)
+    const nextCooldownUntil = Date.now() + CHAT_COOLDOWN_MS
+    localStorage.setItem(CHAT_COOLDOWN_KEY, String(nextCooldownUntil))
+    setCooldownUntil(nextCooldownUntil)
+    setNow(Date.now())
 
     try {
       const response = await fetch(`${API_BASE_URL}/api/chat`, {
@@ -103,6 +118,7 @@ export default function DetailingChat() {
                 WoW Expert
               </a>
             </div>
+            {cooldownSeconds > 0 && <p className="detailer-chat__cooldown">Next question available in {cooldownSeconds}s</p>}
           </div>
 
           <form className="detailer-chat__composer" onSubmit={(event) => { event.preventDefault(); sendMessage(text) }}>
