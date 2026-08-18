@@ -97,7 +97,7 @@ export default function DetailingChat() {
             ))}
             {busy && <p className="detailer-chat__message assistant"><LoaderCircle size={16} className="detailer-chat__spinner" /> Thinking…</p>}
             <div className="detailer-chat__contact-actions">
-              <button className="detailer-chat__booking" type="button" onClick={startBooking}><CalendarPlus size={14} /> Book an appointment</button>
+              <button className="detailer-chat__booking" type="button" onClick={startBooking}><CalendarPlus size={14} /> Book a Visit</button>
               <a className="detailer-chat__whatsapp" href={WHATSAPP_URL} target="_blank" rel="noreferrer">
                 <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M20.52 3.48A11.86 11.86 0 0 0 12.08 0C5.56 0 .25 5.3.25 11.83c0 2.08.54 4.1 1.57 5.88L.16 23.8l6.25-1.64a11.8 11.8 0 0 0 5.66 1.44h.01c6.52 0 11.83-5.3 11.83-11.83 0-3.16-1.23-6.13-3.39-8.29m-8.44 18.1a9.78 9.78 0 0 1-4.99-1.37l-.36-.22-3.7.97.99-3.61-.24-.37a9.78 9.78 0 1 1 8.3 4.6m5.36-7.34c-.29-.15-1.7-.84-1.96-.94-.26-.1-.45-.15-.64.15-.19.29-.74.94-.91 1.13-.17.2-.34.22-.63.08-.29-.15-1.2-.44-2.29-1.4-.85-.75-1.42-1.67-1.59-1.96-.17-.3-.02-.45.13-.59.13-.13.29-.34.44-.51.15-.17.19-.29.29-.49.1-.2.05-.37-.02-.52-.07-.15-.64-1.54-.87-2.11-.23-.55-.47-.48-.64-.49h-.55c-.2 0-.52.07-.79.37-.27.29-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.21 5.08 4.5.71.31 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.08 1.7-.69 1.94-1.35.24-.67.24-1.23.17-1.35-.07-.13-.26-.2-.55-.34" /></svg>
                 WoW Expert
