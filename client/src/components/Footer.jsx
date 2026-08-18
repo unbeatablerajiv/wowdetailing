@@ -91,7 +91,6 @@ export default function Footer() {
             </ul>
             <div className="mt-5 text-sm text-gray-500">
               <p>Mon – Sun: 9am – 8pm</p>
-              <p>Sunday: Closed</p>
             </div>
           </div>
         </div>
