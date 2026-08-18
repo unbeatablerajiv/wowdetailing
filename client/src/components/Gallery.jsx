@@ -32,6 +32,19 @@ const comparisons = [
   },
 ]
 
+const workshopGallery = [
+  { src: '/showcase/black-fortuner.jpg', label: 'Paint correction in progress', alt: 'Detailer polishing a vehicle hood at WOW Detailing' },
+  { src: '/showcase/bmw-z4.jpg', label: 'BMW Z4 PPF installation', alt: 'WOW Detailing team installing paint protection film on a BMW Z4' },
+  { src: '/showcase/bmw-x5-ppf.jpg', label: 'BMW X5 PPF application', alt: 'Detailer applying paint protection film to a BMW X5' },
+  { src: '/showcase/bmw-gt-matte.jpg', label: 'BMW matte-finish care', alt: 'BMW receiving professional matte-finish detailing' },
+  { src: '/showcase/bmw-x5-delivery.jpg', label: 'BMW X5 delivery finish', alt: 'Finished BMW X5 at WOW Detailing' },
+  { src: '/showcase/mercedes-detail.jpg', label: 'Mercedes-Benz detailing', alt: 'Mercedes-Benz receiving professional detailing' },
+  { src: '/showcase/fortuner-legender.jpg', label: 'Fortuner Legender protection', alt: 'Toyota Fortuner Legender at WOW Detailing' },
+  { src: '/showcase/baleno-ceramic.jpg', label: 'Ceramic coating finish', alt: 'Vehicle with a fresh ceramic-coating finish' },
+  { src: '/showcase/audi-a6.jpg', label: 'Audi A6 premium detail', alt: 'Audi A6 being detailed at WOW Detailing' },
+  { src: '/showcase/asmr-wash.jpg', label: 'Meticulous hand wash', alt: 'Premium hand wash at WOW Detailing' },
+]
+
 function ComparisonSlider({ comparison }) {
   const [position, setPosition] = useState(50)
 
@@ -71,6 +84,62 @@ function ComparisonSlider({ comparison }) {
   )
 }
 
+function WorkshopCarousel() {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const activeImage = workshopGallery[activeIndex]
+
+  const showPrevious = () => setActiveIndex((index) => (index - 1 + workshopGallery.length) % workshopGallery.length)
+  const showNext = () => setActiveIndex((index) => (index + 1) % workshopGallery.length)
+
+  return (
+    <div className="mx-auto max-w-3xl">
+      <div className="relative overflow-hidden rounded-2xl bg-dark-900 shadow-xl">
+        <img
+          src={activeImage.src}
+          alt={activeImage.alt}
+          className="aspect-[9/14] w-full object-cover sm:aspect-[4/5]"
+        />
+        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent px-6 pb-6 pt-20 text-white">
+          <p className="text-sm font-semibold uppercase tracking-widest text-brand-300">Workshop Gallery</p>
+          <p className="mt-1 text-xl font-bold">{activeImage.label}</p>
+        </div>
+        <button
+          type="button"
+          onClick={showPrevious}
+          className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-3 text-navy-800 shadow-lg transition hover:bg-brand-500 hover:text-white"
+          aria-label="Show previous gallery image"
+        >
+          <ChevronLeft size={22} />
+        </button>
+        <button
+          type="button"
+          onClick={showNext}
+          className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-3 text-navy-800 shadow-lg transition hover:bg-brand-500 hover:text-white"
+          aria-label="Show next gallery image"
+        >
+          <ChevronRight size={22} />
+        </button>
+      </div>
+
+      <div className="mt-4 flex items-center justify-between gap-4">
+        <p className="text-sm font-medium text-gray-500">{String(activeIndex + 1).padStart(2, '0')} / {String(workshopGallery.length).padStart(2, '0')}</p>
+        <div className="flex gap-2" aria-label="Select a gallery image">
+          {workshopGallery.map((image, index) => (
+            <button
+              key={image.src}
+              type="button"
+              onClick={() => setActiveIndex(index)}
+              className={`h-2.5 rounded-full transition-all ${index === activeIndex ? 'w-7 bg-brand-500' : 'w-2.5 bg-gray-300 hover:bg-gray-400'}`}
+              aria-label={`Show image ${index + 1}: ${image.label}`}
+              aria-current={index === activeIndex ? 'true' : undefined}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function Gallery() {
   return (
     <section className="py-24 bg-white" id="gallery">
@@ -96,26 +165,7 @@ export default function Gallery() {
             </p>
           </div>
 
-          <div className="grid max-w-4xl mx-auto gap-6 md:grid-cols-2">
-            <figure className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-lg">
-              <img
-                src="/showcase/bmw-z4-ppf.png"
-                alt="WOW detailing team applying paint protection film to a BMW Z4"
-                className="aspect-[9/16] w-full object-cover"
-                loading="lazy"
-              />
-              <figcaption className="p-5 text-center font-semibold text-navy-800">Precision PPF application</figcaption>
-            </figure>
-            <figure className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-lg">
-              <img
-                src="/showcase/bmw-x5-ppf.png"
-                alt="Detailer carefully installing paint protection film on a BMW X5"
-                className="aspect-[9/16] w-full object-cover"
-                loading="lazy"
-              />
-              <figcaption className="p-5 text-center font-semibold text-navy-800">Meticulous film installation</figcaption>
-            </figure>
-          </div>
+          <WorkshopCarousel />
         </div>
       </div>
     </section>
