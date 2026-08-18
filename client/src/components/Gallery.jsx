@@ -50,7 +50,7 @@ function ComparisonSlider({ comparison }) {
 
   return (
     <article className="overflow-hidden rounded-2xl border border-dark-500 bg-dark-700 shadow-sm">
-      <div className="relative aspect-[4/5] overflow-hidden bg-dark-600 select-none">
+      <div className="relative h-[360px] overflow-hidden bg-dark-600 select-none sm:h-[400px]">
         <img src={comparison.after} alt="" className="absolute inset-0 h-full w-full object-cover" />
         <img
           src={comparison.before}
