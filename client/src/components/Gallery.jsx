@@ -37,12 +37,12 @@ const workshopGallery = [
   { src: '/showcase/bmw-z4.jpg', label: 'BMW Z4 PPF installation', alt: 'WOW Detailing team installing paint protection film on a BMW Z4' },
   { src: '/showcase/bmw-x5-ppf.jpg', label: 'BMW X5 PPF application', alt: 'Detailer applying paint protection film to a BMW X5' },
   { src: '/showcase/bmw-gt-matte.jpg', label: 'BMW matte-finish care', alt: 'BMW receiving professional matte-finish detailing' },
-  { src: '/showcase/bmw-x5-delivery.jpg', label: 'BMW X5 delivery finish', alt: 'Finished BMW X5 at WOW Detailing' },
-  { src: '/showcase/mercedes-detail.jpg', label: 'Mercedes-Benz detailing', alt: 'Mercedes-Benz receiving professional detailing' },
+  { src: '/showcase/tata-sierra.jpg', label: 'Paint correction in action', alt: 'WOW Detailing technician polishing a yellow Tata Sierra' },
+  { src: '/showcase/civic-full.jpg', label: 'Honda Civic matte transformation', alt: 'Honda Civic after a professional matte transformation' },
   { src: '/showcase/fortuner-legender.jpg', label: 'Fortuner Legender protection', alt: 'Toyota Fortuner Legender at WOW Detailing' },
   { src: '/showcase/baleno-ceramic.jpg', label: 'Ceramic coating finish', alt: 'Vehicle with a fresh ceramic-coating finish' },
-  { src: '/showcase/audi-a6.jpg', label: 'Audi A6 premium detail', alt: 'Audi A6 being detailed at WOW Detailing' },
-  { src: '/showcase/asmr-wash.jpg', label: 'Meticulous hand wash', alt: 'Premium hand wash at WOW Detailing' },
+  { src: '/showcase/continental-gt.jpg', label: 'Continental GT studio finish', alt: 'Royal Enfield Continental GT with a premium studio finish' },
+  { src: '/showcase/ducati-xdiavel.jpg', label: 'Ducati XDiavel foam wash', alt: 'Ducati XDiavel receiving a detailed foam wash' },
 ]
 
 function ComparisonSlider({ comparison }) {
