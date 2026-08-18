@@ -103,8 +103,8 @@ export default function DetailingChat() {
             ))}
             {busy && <p className="detailer-chat__message assistant"><LoaderCircle size={16} className="detailer-chat__spinner" /> Thinking…</p>}
             <div className="detailer-chat__contact-actions">
-              <button className="detailer-chat__booking" type="button" onClick={startBooking}><CalendarPlus size={14} /> Book</button>
-              <a className="detailer-chat__whatsapp" href={WHATSAPP_URL} target="_blank" rel="noreferrer"><MessageCircle size={14} /> WhatsApp</a>
+              <button className="detailer-chat__booking" type="button" onClick={startBooking}><CalendarPlus size={14} /> Book an appointment</button>
+              <a className="detailer-chat__whatsapp" href={WHATSAPP_URL} target="_blank" rel="noreferrer"><MessageCircle size={14} /> Connect on WhatsApp</a>
             </div>
           </div>
 
