@@ -16,6 +16,20 @@ const comparisons = [
     after: '/showcase/honda-6.jpeg',
     alt: 'Honda Civic paint correction before and after detailing',
   },
+  {
+    title: 'Front Bumper Revival',
+    description: 'Targeted exterior restoration to bring a cleaner, more refined finish back to high-impact areas.',
+    before: '/showcase/skoda-4.jpg',
+    after: '/showcase/skoda-6.jpg',
+    alt: 'Honda Civic front bumper restoration before and after detailing',
+  },
+  {
+    title: 'Rear Finish Revival',
+    description: 'Thorough surface preparation and finishing to restore a crisp, cared-for appearance.',
+    before: '/showcase/skoda-3.jpg',
+    after: '/showcase/skoda-5.jpg',
+    alt: 'Honda Civic rear finish restoration before and after detailing',
+  },
 ]
 
 function ComparisonSlider({ comparison }) {
