@@ -6,6 +6,7 @@ const { errorHandler } = require('./src/middleware/errorHandler')
 const bookingsRouter = require('./src/routes/bookings')
 const servicesRouter = require('./src/routes/services')
 const contactRouter  = require('./src/routes/contact')
+const chatRouter = require('./src/routes/chat')
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -31,6 +32,7 @@ app.get('/api/health', (_, res) => res.json({ status: 'ok', timestamp: new Date(
 app.use('/api/bookings', bookingsRouter)
 app.use('/api/services',  servicesRouter)
 app.use('/api/contact',   contactRouter)
+app.use('/api/chat',      chatRouter)
 
 app.use(errorHandler)
 

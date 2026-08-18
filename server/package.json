@@ -12,6 +12,7 @@
     "db:reset": "npx prisma migrate reset"
   },
   "dependencies": {
+    "@google/genai": "^1.17.0",
     "@prisma/client": "^5.16.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
