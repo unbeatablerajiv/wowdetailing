@@ -1,14 +1,16 @@
 import { useMemo, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { ImagePlus, LoaderCircle, MessageCircle, Send, Sparkles, X } from 'lucide-react'
 
 const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '')
-const QUICK_ACTIONS = ['Ceramic Coating', 'PPF', 'Paint Correction', 'Interior Detailing', 'Get a Price']
+const QUICK_ACTIONS = ['Ceramic Coating', 'PPF', 'Paint Correction', 'Interior Detailing', 'Get a Price', 'Book Appointment']
 const welcome = {
   role: 'assistant',
   text: 'Hi! I’m the WOW AI Detailer. Tell me your car and what you want to improve—swirl marks, scratches, gloss, protection or interiors—and I’ll recommend the right service.'
 }
 
 export default function DetailingChat() {
+  const navigate = useNavigate()
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState([welcome])
   const [text, setText] = useState('')
@@ -71,6 +73,11 @@ export default function DetailingChat() {
     reader.readAsDataURL(file)
   }
 
+  function startBooking() {
+    setOpen(false)
+    navigate('/booking')
+  }
+
   return (
     <div className="detailer-chat">
       {open && (
@@ -84,11 +91,12 @@ export default function DetailingChat() {
           <div className="detailer-chat__body">
             <div className="detailer-chat__quick-actions">
               {QUICK_ACTIONS.map((action) => (
-                <button key={action} type="button" onClick={() => sendMessage(`I want information about ${action}.`)}>{action}</button>
+                <button key={action} type="button" onClick={() => action === 'Book Appointment' ? startBooking() : sendMessage(`I want information about ${action}.`)}>{action}</button>
               ))}
             </div>
             {messages.map((item, index) => <p className={`detailer-chat__message ${item.role}`} key={index}>{item.text}</p>)}
             {busy && <p className="detailer-chat__message assistant"><LoaderCircle size={16} className="detailer-chat__spinner" /> Thinking…</p>}
+            <button className="detailer-chat__booking" type="button" onClick={startBooking}>Book an appointment</button>
           </div>
 
           <form className="detailer-chat__composer" onSubmit={(event) => { event.preventDefault(); sendMessage(text) }}>
