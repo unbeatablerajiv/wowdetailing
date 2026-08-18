@@ -13,7 +13,7 @@ import {
 const contactInfo = [
   { icon: Phone, label: 'Phone', value: BUSINESS_PHONE, href: BUSINESS_PHONE_LINK },
   { icon: Mail, label: 'Email', value: BUSINESS_EMAIL, href: BUSINESS_EMAIL_LINK },
-  { icon: MapPin, label: 'Location', value: '42 MG Road, Bengaluru, Karnataka 560001', href: '#' },
+  { icon: MapPin, label: 'Location', value: 'Jharkhand, India', href: '#' },
   { icon: Clock, label: 'Hours', value: 'Mon–Fri 8am–6pm, Sat 9am–4pm', href: null },
 ]
 
@@ -83,7 +83,7 @@ export default function ContactPage() {
             <div className="rounded-xl overflow-hidden border border-dark-500 h-48 bg-dark-700 flex items-center justify-center">
               <div className="text-center text-gray-500">
                 <MapPin size={32} className="mx-auto mb-2 text-dark-400" />
-                <p className="text-sm">42 MG Road, Bengaluru</p>
+                <p className="text-sm">Jharkhand, India</p>
                 <p className="text-xs text-gray-400 mt-1">Map integration ready for production</p>
               </div>
             </div>
