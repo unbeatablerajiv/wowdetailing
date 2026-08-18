@@ -1,7 +1,7 @@
 export const BUSINESS_PHONE = '+91 6207804906'
 export const BUSINESS_PHONE_LINK = 'tel:+916207804906'
 export const BUSINESS_WHATSAPP_LINK = 'https://wa.me/916207804906'
-export const BUSINESS_EMAIL = 'hello@wowdetailing.com'
+export const BUSINESS_EMAIL = 'detailingdaddy2021@gmail.com'
 export const BUSINESS_EMAIL_LINK = `mailto:${BUSINESS_EMAIL}`
 
 export const buildMailtoLink = ({ subject, body }) => {
