@@ -1,7 +1,7 @@
 import { useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
-import { ImagePlus, LoaderCircle, MessageCircle, Send, Sparkles, X } from 'lucide-react'
+import { CalendarPlus, ImagePlus, LoaderCircle, MessageCircle, Send, Sparkles, X } from 'lucide-react'
 
 const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '')
 const WHATSAPP_URL = 'https://wa.me/916207804906'
@@ -102,8 +102,10 @@ export default function DetailingChat() {
               </div>
             ))}
             {busy && <p className="detailer-chat__message assistant"><LoaderCircle size={16} className="detailer-chat__spinner" /> Thinking…</p>}
-            <button className="detailer-chat__booking" type="button" onClick={startBooking}>Book an appointment</button>
-            <a className="detailer-chat__whatsapp" href={WHATSAPP_URL} target="_blank" rel="noreferrer">Connect on WhatsApp</a>
+            <div className="detailer-chat__contact-actions">
+              <button className="detailer-chat__booking" type="button" onClick={startBooking}><CalendarPlus size={14} /> Book</button>
+              <a className="detailer-chat__whatsapp" href={WHATSAPP_URL} target="_blank" rel="noreferrer"><MessageCircle size={14} /> WhatsApp</a>
+            </div>
           </div>
 
           <form className="detailer-chat__composer" onSubmit={(event) => { event.preventDefault(); sendMessage(text) }}>
