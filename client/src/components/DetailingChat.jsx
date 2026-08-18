@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import ReactMarkdown from 'react-markdown'
 import { ImagePlus, LoaderCircle, MessageCircle, Send, Sparkles, X } from 'lucide-react'
 
 const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '')
@@ -94,7 +95,11 @@ export default function DetailingChat() {
                 <button key={action} type="button" onClick={() => action === 'Book Appointment' ? startBooking() : sendMessage(`I want information about ${action}.`)}>{action}</button>
               ))}
             </div>
-            {messages.map((item, index) => <p className={`detailer-chat__message ${item.role}`} key={index}>{item.text}</p>)}
+            {messages.map((item, index) => (
+              <div className={`detailer-chat__message ${item.role}`} key={index}>
+                <ReactMarkdown>{item.text}</ReactMarkdown>
+              </div>
+            ))}
             {busy && <p className="detailer-chat__message assistant"><LoaderCircle size={16} className="detailer-chat__spinner" /> Thinking…</p>}
             <button className="detailer-chat__booking" type="button" onClick={startBooking}>Book an appointment</button>
           </div>
