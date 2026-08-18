@@ -97,7 +97,7 @@ function WorkshopCarousel() {
         <img
           src={activeImage.src}
           alt={activeImage.alt}
-          className="aspect-[9/14] w-full object-cover sm:aspect-[4/5]"
+          className="h-[360px] w-full object-cover sm:h-[440px]"
         />
         <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent px-6 pb-6 pt-20 text-white">
           <p className="text-sm font-semibold uppercase tracking-widest text-brand-300">Workshop Gallery</p>
