@@ -5,10 +5,9 @@ import { CalendarPlus, ImagePlus, LoaderCircle, MessageCircle, Send, Sparkles, X
 
 const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '')
 const WHATSAPP_URL = 'https://wa.me/916207804906'
-const QUICK_ACTIONS = ['Ceramic Coating', 'PPF', 'Paint Correction', 'Interior Detailing', 'Get a Price', 'Book Appointment']
 const welcome = {
   role: 'assistant',
-  text: 'Hi! I’m the WOW AI Detailer. Tell me your car and what you want to improve—swirl marks, scratches, gloss, protection or interiors—and I’ll recommend the right service.'
+  text: 'Welcome to WOW! I’m your personal car-care expert. Tell me your car, its condition, or the finish you’re after—and I’ll help you find the perfect detail, protection, and shine.'
 }
 
 export default function DetailingChat() {
@@ -91,11 +90,6 @@ export default function DetailingChat() {
           </header>
 
           <div className="detailer-chat__body">
-            <div className="detailer-chat__quick-actions">
-              {QUICK_ACTIONS.map((action) => (
-                <button key={action} type="button" onClick={() => action === 'Book Appointment' ? startBooking() : sendMessage(`I want information about ${action}.`)}>{action}</button>
-              ))}
-            </div>
             {messages.map((item, index) => (
               <div className={`detailer-chat__message ${item.role}`} key={index}>
                 <ReactMarkdown>{item.text}</ReactMarkdown>
