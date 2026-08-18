@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown'
 import { ImagePlus, LoaderCircle, MessageCircle, Send, Sparkles, X } from 'lucide-react'
 
 const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '')
+const WHATSAPP_URL = 'https://wa.me/916207804906'
 const QUICK_ACTIONS = ['Ceramic Coating', 'PPF', 'Paint Correction', 'Interior Detailing', 'Get a Price', 'Book Appointment']
 const welcome = {
   role: 'assistant',
@@ -102,6 +103,7 @@ export default function DetailingChat() {
             ))}
             {busy && <p className="detailer-chat__message assistant"><LoaderCircle size={16} className="detailer-chat__spinner" /> Thinking…</p>}
             <button className="detailer-chat__booking" type="button" onClick={startBooking}>Book an appointment</button>
+            <a className="detailer-chat__whatsapp" href={WHATSAPP_URL} target="_blank" rel="noreferrer">Connect on WhatsApp</a>
           </div>
 
           <form className="detailer-chat__composer" onSubmit={(event) => { event.preventDefault(); sendMessage(text) }}>
