@@ -29,7 +29,7 @@ export default function Hero() {
       <div className="absolute bottom-0 right-0 w-64 h-64 bg-brand-600/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
-        <div className="max-w-3xl">
+        <div className="max-w-4xl">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-navy-800/80 border border-brand-500/30 rounded-full px-4 py-1.5 mb-6">
             <span className="w-2 h-2 rounded-full bg-brand-500 animate-pulse" />
@@ -38,7 +38,7 @@ export default function Hero() {
 
           {/* Headline */}
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight mb-6">
-            <span className="text-white">Your Vehicle Deserves</span>
+            <span className="text-white md:whitespace-nowrap">Your Vehicle Deserves</span>
             <br />
             <span className="text-gradient">The Wow Care</span>
           </h1>
