@@ -10,10 +10,14 @@ import {
   buildMailtoLink,
 } from '../utils/contact'
 
+const MAP_QUERY = '87QX+36C, VIP Road, Harmu Rd, Dibdih, Ranchi, Jharkhand 834002'
+const MAP_URL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(MAP_QUERY)}`
+const MAP_EMBED_URL = `https://www.google.com/maps?q=${encodeURIComponent(MAP_QUERY)}&output=embed`
+
 const contactInfo = [
   { icon: Phone, label: 'Phone', value: BUSINESS_PHONE, href: BUSINESS_PHONE_LINK },
   { icon: Mail, label: 'Email', value: BUSINESS_EMAIL, href: BUSINESS_EMAIL_LINK },
-  { icon: MapPin, label: 'Location', value: 'VIP Road, Harmu Rd, near Dibdih Overbridge, Dibdih, Ranchi, Jharkhand 834002', href: '#' },
+  { icon: MapPin, label: 'Location', value: 'VIP Road, Harmu Rd, near Dibdih Overbridge, Dibdih, Ranchi, Jharkhand 834002', href: MAP_URL },
   { icon: Clock, label: 'Hours', value: 'Mon–Fri 8am–6pm, Sat 9am–4pm', href: null },
 ]
 
@@ -79,13 +83,15 @@ export default function ContactPage() {
               ))}
             </div>
 
-            {/* Map placeholder */}
-            <div className="rounded-xl overflow-hidden border border-dark-500 h-48 bg-dark-700 flex items-center justify-center">
-              <div className="text-center text-gray-500">
-                <MapPin size={32} className="mx-auto mb-2 text-dark-400" />
-                <p className="text-sm">VIP Road, Harmu Rd, near Dibdih Overbridge, Dibdih, Ranchi, Jharkhand 834002</p>
-                <p className="text-xs text-gray-400 mt-1">Map integration ready for production</p>
-              </div>
+            <div className="rounded-xl overflow-hidden border border-dark-500 h-64 bg-dark-700">
+              <iframe
+                title="WOW Detailing Studio location"
+                src={MAP_EMBED_URL}
+                className="w-full h-full border-0"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
             </div>
           </div>
 
