@@ -1,4 +1,4 @@
-const OpenAI = require('openai')
+const { GoogleGenAI } = require('@google/genai')
 
 const allowedImageTypes = new Set(['image/jpeg', 'image/png', 'image/webp'])
 
@@ -13,44 +13,33 @@ function safeHistory(history) {
   if (!Array.isArray(history)) return []
   return history.slice(-8).flatMap((item) => {
     if (!item || !['user', 'assistant'].includes(item.role) || typeof item.text !== 'string') return []
-    return [{
-      role: item.role,
-      content: [{ type: item.role === 'assistant' ? 'output_text' : 'input_text', text: item.text.slice(0, 2500) }],
-    }]
+    return [{ role: item.role === 'assistant' ? 'model' : 'user', parts: [{ text: item.text.slice(0, 2500) }] }]
   })
 }
 
 async function chat(req, res, next) {
   try {
-    if (!process.env.OPENAI_API_KEY) return res.status(500).json({ error: 'The AI assistant is not configured yet.' })
+    if (!process.env.GEMINI_API_KEY) return res.status(500).json({ error: 'The AI assistant is not configured yet.' })
     const { message, image, history } = req.body || {}
     if (!message && !image?.data) return res.status(400).json({ error: 'A message or image is required.' })
     if (image && (!allowedImageTypes.has(image.mimeType) || typeof image.data !== 'string' || image.data.length > 8_500_000)) {
       return res.status(400).json({ error: 'Please upload a JPG, PNG or WEBP image smaller than 6 MB.' })
     }
 
-    const input = safeHistory(history)
-    const last = input.at(-1)
-    if (!last || last.role !== 'user') {
-      input.push({ role: 'user', content: [{ type: 'input_text', text: String(message || 'Analyse this vehicle image.').slice(0, 2500) }] })
-    }
-    if (image) {
-      input.at(-1).content.push({ type: 'input_image', image_url: `data:${image.mimeType};base64,${image.data}` })
-    }
+    const contents = safeHistory(history)
+    const last = contents.at(-1)
+    if (!last || last.role !== 'user') contents.push({ role: 'user', parts: [{ text: String(message || 'Analyse this vehicle image.').slice(0, 2500) }] })
+    if (image) contents.at(-1).parts.push({ inlineData: { mimeType: image.mimeType, data: image.data } })
 
-    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
-    const response = await openai.responses.create({
-      model: 'gpt-5.6-luna',
-      instructions: systemInstruction(),
-      input,
-      reasoning: { effort: 'low' },
-      text: { verbosity: 'low' },
-      max_output_tokens: 350,
-      store: false,
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })
+    const response = await ai.models.generateContent({
+      model: process.env.GEMINI_MODEL || 'gemini-3.6-flash',
+      contents,
+      config: { systemInstruction: systemInstruction(), temperature: 0.35 },
     })
-    return res.json({ reply: response.output_text || 'I’m unable to provide a recommendation from that input.' })
+    return res.json({ reply: response.text || 'I’m unable to provide a recommendation from that input.' })
   } catch (error) {
-    console.error('OpenAI chat error:', error)
+    console.error('Gemini chat error:', error)
     return next(error)
   }
 }
