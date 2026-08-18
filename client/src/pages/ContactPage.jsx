@@ -28,9 +28,6 @@ export default function ContactPage() {
           <p className="section-subheading mx-auto mt-4">
             Questions about a service, a custom quote, or just want to say hi? We'd love to hear from you.
           </p>
-          <p className="text-sm text-gray-500 mt-4">
-            The site is currently taking enquiries by email, phone, and WhatsApp.
-          </p>
         </div>
 
         <div className="max-w-2xl mx-auto">
