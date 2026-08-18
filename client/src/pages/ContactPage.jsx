@@ -18,7 +18,7 @@ const contactInfo = [
   { icon: Phone, label: 'Phone', value: BUSINESS_PHONE, href: BUSINESS_PHONE_LINK },
   { icon: Mail, label: 'Email', value: BUSINESS_EMAIL, href: BUSINESS_EMAIL_LINK },
   { icon: MapPin, label: 'Location', value: 'VIP Road, Harmu Rd, near Dibdih Overbridge, Dibdih, Ranchi, Jharkhand 834002', href: MAP_URL },
-  { icon: Clock, label: 'Hours', value: 'Mon–Fri 8am–6pm, Sat 9am–4pm', href: null },
+  { icon: Clock, label: 'Hours', value: 'Mon–Sun 9am–8pm', href: null },
 ]
 
 export default function ContactPage() {

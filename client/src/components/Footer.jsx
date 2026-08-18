@@ -90,8 +90,7 @@ export default function Footer() {
               </li>
             </ul>
             <div className="mt-5 text-sm text-gray-500">
-              <p>Mon – Fri: 8am – 6pm</p>
-              <p>Saturday: 9am – 4pm</p>
+              <p>Mon – Sun: 9am – 8pm</p>
               <p>Sunday: Closed</p>
             </div>
           </div>
