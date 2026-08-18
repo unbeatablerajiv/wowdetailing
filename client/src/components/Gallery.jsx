@@ -86,6 +86,37 @@ export default function Gallery() {
         <div className="grid gap-8 md:grid-cols-2 max-w-5xl mx-auto">
           {comparisons.map((comparison) => <ComparisonSlider key={comparison.title} comparison={comparison} />)}
         </div>
+
+        <div className="mt-16">
+          <div className="text-center mb-8">
+            <span className="text-brand-500 text-sm font-semibold uppercase tracking-widest">Behind the Craft</span>
+            <h3 className="mt-2 text-3xl font-bold text-navy-800">Precision in Every Detail</h3>
+            <p className="mx-auto mt-3 max-w-2xl text-gray-600">
+              From careful paint-protection-film installation to meticulous finishing, every vehicle is handled with focus and care.
+            </p>
+          </div>
+
+          <div className="grid max-w-4xl mx-auto gap-6 md:grid-cols-2">
+            <figure className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-lg">
+              <img
+                src="/showcase/bmw-z4-ppf.png"
+                alt="WOW detailing team applying paint protection film to a BMW Z4"
+                className="aspect-[9/16] w-full object-cover"
+                loading="lazy"
+              />
+              <figcaption className="p-5 text-center font-semibold text-navy-800">Precision PPF application</figcaption>
+            </figure>
+            <figure className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-lg">
+              <img
+                src="/showcase/bmw-x5-ppf.png"
+                alt="Detailer carefully installing paint protection film on a BMW X5"
+                className="aspect-[9/16] w-full object-cover"
+                loading="lazy"
+              />
+              <figcaption className="p-5 text-center font-semibold text-navy-800">Meticulous film installation</figcaption>
+            </figure>
+          </div>
+        </div>
       </div>
     </section>
   )
