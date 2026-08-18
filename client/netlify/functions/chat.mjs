@@ -47,6 +47,18 @@ export default async (request) => {
     return json({ reply: response.text || 'I’m unable to provide a recommendation from that input.' })
   } catch (error) {
     console.error('Gemini chat error:', error)
-    return json({ error: 'AI request failed. Please try again shortly.' }, 500)
+    const detail = String(error?.message || '')
+    const status = Number(error?.status)
+    let message = 'The AI assistant is temporarily unavailable. Please try again shortly.'
+
+    if (status === 400 || status === 401 || status === 403 || /api key|authentication|permission denied/i.test(detail)) {
+      message = 'The AI assistant key needs to be updated in Netlify. Please contact WOW Detailing.'
+    } else if (status === 429 || /quota|rate limit/i.test(detail)) {
+      message = 'The AI assistant is receiving a high number of requests. Please try again in a moment.'
+    } else if (status === 404 || /model.*not.*available/i.test(detail)) {
+      message = 'The AI assistant model is being updated. Please try again shortly.'
+    }
+
+    return json({ error: message }, 500)
   }
 }
