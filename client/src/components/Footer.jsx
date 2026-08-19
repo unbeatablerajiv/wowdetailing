@@ -99,6 +99,7 @@ export default function Footer() {
           <p className="text-gray-500 text-sm">
             © {new Date().getFullYear()} Wow Detailing. All rights reserved.
           </p>
+          <p className="text-gray-500 text-sm">Powered by CloudInfy Business Solutions</p>
         </div>
       </div>
     </footer>
