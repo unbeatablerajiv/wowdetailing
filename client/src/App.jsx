@@ -7,6 +7,7 @@ import ServicesPage from './pages/ServicesPage'
 import BookingPage from './pages/BookingPage'
 import ContactPage from './pages/ContactPage'
 import WorkPage from './pages/WorkPage'
+import TestimonialsPage from './pages/TestimonialsPage'
 import ScrollToTop from './components/ScrollToTop'
 import DetailingChat from './components/DetailingChat'
 
@@ -33,6 +34,7 @@ export default function App() {
           <Route path="/booking" element={<BookingPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/our-work" element={<WorkPage />} />
+          <Route path="/testimonials" element={<TestimonialsPage />} />
         </Routes>
       </main>
       <Footer />
