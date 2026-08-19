@@ -19,7 +19,7 @@ export default function Home() {
           <div className="bg-gradient-to-r from-dark-700 via-dark-700 to-dark-700 border border-brand-500/30 rounded-3xl p-12 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-radial from-brand-500/5 to-transparent" />
             <div className="relative">
-              <h2 className="text-3xl md:text-4xl font-black text-white mb-4">
+              <h2 className="text-3xl md:text-4xl font-black text-brand-500 mb-4">
                 Ready to Transform Your Car?
               </h2>
               <p className="text-gray-400 text-lg mb-8 max-w-xl mx-auto">
