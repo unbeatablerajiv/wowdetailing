@@ -106,14 +106,6 @@ const testimonials = [
     avatar: 'ND',
   },
   {
-    id: 15,
-    name: 'SAGAR KUMAR',
-    vehicle: 'Tata Punch · PPF',
-    rating: 5,
-    text: 'वॉव डिटेलिंग स्टूडियो में मेरा अनुभव काफी अच्छा रहा। मेरी Tata Punch की PPF अभी तक नई जैसी है।',
-    avatar: 'SK',
-  },
-  {
     id: 16,
     name: 'Aslam Ansari',
     vehicle: 'Tata Safari · PPF',
