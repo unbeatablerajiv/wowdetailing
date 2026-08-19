@@ -3,51 +3,51 @@ import { Star, Quote } from 'lucide-react'
 const testimonials = [
   {
     id: 1,
-    name: 'James T.',
-    vehicle: 'BMW M4',
+    name: 'Pankaj Kumar Sinha',
+    vehicle: 'Innova HyCross & Honda City Hybrid · PPF',
     rating: 5,
-    text: "Absolutely mind-blowing results. My M4 looks better than it did walking out of the dealership. The team's attention to detail is second to none — every panel, every crevice, spotless.",
-    avatar: 'JT',
+    text: 'The precision of PPF application, flawless finish and attention to detail significantly enhanced the appearance and protection of both my vehicles.',
+    avatar: 'PK',
   },
   {
     id: 2,
-    name: 'Sarah M.',
-    vehicle: 'Toyota RAV4',
+    name: 'Anup Toppo',
+    vehicle: 'Hyundai Verna · Graphene Matrix Coating',
     rating: 5,
-    text: "I booked the Interior Detail after my dog destroyed the back seat. I honestly couldn't believe the transformation. Smells fresh, looks brand new. Will be a regular customer from now on.",
-    avatar: 'SM',
+    text: 'Recently got my Verna Graphene Matrix coated from WOW Detailing—an amazing experience. Prompt service, skilled staff and amazing quality of work.',
+    avatar: 'AT',
   },
   {
     id: 3,
-    name: 'David K.',
-    vehicle: 'Porsche Cayenne',
+    name: 'Amit Kumar',
+    vehicle: 'Scratch Restoration',
     rating: 5,
-    text: "Premium Package was 100% worth it. The paint correction has removed years of swirl marks and the ceramic prep left the finish glass-smooth. Professional outfit from booking to handover.",
-    avatar: 'DK',
+    text: 'My vehicle was completely revamped even after having a lot of scratches. Everyone in the family was happy once it was done!',
+    avatar: 'AK',
   },
   {
     id: 4,
-    name: 'Priya R.',
-    vehicle: 'Tesla Model 3',
+    name: 'Nikhil Singh',
+    vehicle: 'Škoda Yeti · Full Detailing',
     rating: 5,
-    text: "Easy online booking, showed up on time, great communication throughout. The Essential Wash left my Model 3 looking stunning. Quick and affordable for a weekly top-up.",
-    avatar: 'PR',
+    text: 'Great work on my 11-year-old Škoda Yeti. The attention to detail was amazing; staff were professional and courteous, and I’ll be visiting again.',
+    avatar: 'NS',
   },
   {
     id: 5,
-    name: 'Marcus L.',
-    vehicle: 'Ford F-150',
+    name: 'Anshuman Raj',
+    vehicle: 'Hyundai Venue SX · PPF',
     rating: 5,
-    text: "Work truck that needed serious love. Full Detail brought it back to life — even the engine bay. These guys really do go the extra mile. Booked for next month already.",
-    avatar: 'ML',
+    text: 'Gave my Venue SX for PPF installation. The service is just WOW! Each and every finish is done precisely. Highly recommended if you love your car.',
+    avatar: 'AR',
   },
   {
     id: 6,
-    name: 'Emma W.',
-    vehicle: 'Mercedes GLC',
+    name: 'Anish Minz',
+    vehicle: 'Mahindra Thar ROXX · PPF',
     rating: 5,
-    text: "Gifted a Full Detail to my husband for his birthday. He cried (happy tears). The team even left a little note and treated the car with genuine care. Highly recommended.",
-    avatar: 'EW',
+    text: 'I got my Thar ROXX PPF’ed from WOW and I’m highly satisfied with their work, behaviour and team management. They make you feel like home.',
+    avatar: 'AM',
   },
 ]
 
@@ -69,7 +69,7 @@ export default function Testimonials() {
           <span className="text-brand-500 text-sm font-semibold uppercase tracking-widest">Reviews</span>
           <h2 className="section-heading mt-2">What Our Clients Say</h2>
           <p className="section-subheading mx-auto mt-4">
-            Over 500 five-star reviews and counting. Real customers, real results.
+            Real five-star experiences from WOW customers.
           </p>
         </div>
 
