@@ -99,9 +99,6 @@ export default function Footer() {
           <p className="text-gray-500 text-sm">
             © {new Date().getFullYear()} Wow Detailing. All rights reserved.
           </p>
-          <p className="text-gray-600 text-xs">
-            Built with ❤ — React + Node.js + PostgreSQL
-          </p>
         </div>
       </div>
     </footer>
