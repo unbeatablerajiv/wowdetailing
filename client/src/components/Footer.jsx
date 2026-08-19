@@ -78,7 +78,7 @@ export default function Footer() {
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
                 <MapPin size={15} className="text-brand-500 mt-0.5 shrink-0" />
-                <span className="text-gray-400 text-sm">VIP Road, Harmu Rd, near Dibdih Overbridge,<br />Dibdih, Ranchi, Jharkhand 834002</span>
+                <span className="text-gray-400 text-sm">VIP Road, near Dibdih Overbridge,<br />Dibdih, Ranchi, Jharkhand 834002</span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={15} className="text-brand-500 shrink-0" />

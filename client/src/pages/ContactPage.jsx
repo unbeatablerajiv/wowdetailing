@@ -6,14 +6,14 @@ import {
   BUSINESS_PHONE_LINK,
 } from '../utils/contact'
 
-const MAP_QUERY = '87QX+36C, VIP Road, Harmu Rd, Dibdih, Ranchi, Jharkhand 834002'
+const MAP_QUERY = '87QX+36C, VIP Road, Dibdih, Ranchi, Jharkhand 834002'
 const MAP_URL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(MAP_QUERY)}`
 const MAP_EMBED_URL = `https://www.google.com/maps?q=${encodeURIComponent(MAP_QUERY)}&output=embed`
 
 const contactInfo = [
   { icon: Phone, label: 'Phone', value: BUSINESS_PHONE, href: BUSINESS_PHONE_LINK },
   { icon: Mail, label: 'Email', value: BUSINESS_EMAIL, href: BUSINESS_EMAIL_LINK },
-  { icon: MapPin, label: 'Location', value: 'VIP Road, Harmu Rd, near Dibdih Overbridge, Dibdih, Ranchi, Jharkhand 834002', href: MAP_URL },
+  { icon: MapPin, label: 'Location', value: 'VIP Road, near Dibdih Overbridge, Dibdih, Ranchi, Jharkhand 834002', href: MAP_URL },
   { icon: Clock, label: 'Hours', value: 'Mon–Sun 9am–8pm', href: null },
 ]
 
