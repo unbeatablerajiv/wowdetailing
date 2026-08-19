@@ -50,14 +50,6 @@ const testimonials = [
     avatar: 'AM',
   },
   {
-    id: 7,
-    name: 'Harsh Gupta',
-    vehicle: 'Premium Car Detailing',
-    rating: 5,
-    text: 'Absolutely amazing experience at WOW Detailing! The team is highly professional, pays great attention to every detail, and made my car look brand new.',
-    avatar: 'HG',
-  },
-  {
     id: 8,
     name: 'Yash Sharan',
     vehicle: 'Hyundai Creta · Ceramic Coating',
