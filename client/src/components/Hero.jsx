@@ -3,7 +3,7 @@ import { ArrowRight, Star, Shield, Clock } from 'lucide-react'
 
 const stats = [
   { icon: Star, value: '10000+', label: 'Happy Clients' },
-  { icon: Shield, value: '5★', label: 'Average Rating' },
+  { icon: Shield, value: '4.7★', label: 'Average Rating' },
   { icon: Clock, value: '8+', label: 'Years Experience' },
 ]
 
