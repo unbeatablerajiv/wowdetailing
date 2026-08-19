@@ -22,7 +22,7 @@ export default function Home() {
               <h2 className="text-3xl md:text-4xl font-black text-brand-500 mb-4">
                 Ready to Transform Your Car?
               </h2>
-              <p className="text-gray-400 text-lg mb-8 max-w-xl mx-auto">
+              <p className="text-gray-500 text-lg mb-8 max-w-xl mx-auto">
                 Book your appointment today and experience the Wow Detailing difference.
               </p>
               <Link to="/booking" className="btn-primary text-base px-10 py-4 glow-amber">
