@@ -58,7 +58,7 @@ export default function WhyUs() {
                 </div>
                 <div>
                   <div className="text-navy-800 font-bold">Voted #1 Detailing Studio</div>
-                  <div className="text-gray-500 text-sm mt-0.5">Jharkhand's Choice Awards — 3 years running</div>
+                  <div className="text-gray-500 text-sm mt-0.5">North India's Choice</div>
                 </div>
               </div>
             </div>
