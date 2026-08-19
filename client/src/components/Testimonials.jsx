@@ -121,6 +121,14 @@ const testimonials = [
     text: 'Got my Tata Safari PPF done at WOW. Loved their overall service and hospitality—hands down the best automobile detailing company in Ranchi.',
     avatar: 'AS',
   },
+  {
+    id: 17,
+    name: 'Rani Praween',
+    vehicle: 'BMW 7 · PPF',
+    rating: 5,
+    text: 'Before getting my BMW 7 PPF’ed, I visited almost all detailing outlets in Ranchi. WOW stood out for product knowledge and experience.',
+    avatar: 'RP',
+  },
 ]
 
 function Stars({ count }) {
